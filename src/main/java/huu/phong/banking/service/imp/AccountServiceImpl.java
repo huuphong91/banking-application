@@ -2,6 +2,7 @@ package huu.phong.banking.service.imp;
 
 import huu.phong.banking.dto.AccountDto;
 import huu.phong.banking.entity.Account;
+import huu.phong.banking.exception.AccountException;
 import huu.phong.banking.mapper.AccountMapper;
 import huu.phong.banking.repository.AccountRepository;
 import huu.phong.banking.service.AccountService;
@@ -28,14 +29,14 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public AccountDto getAccountById(Long id) {
-        Account account = accountRepository.findById(id).orElseThrow(() -> new RuntimeException("Account not found"));
+        Account account = accountRepository.findById(id).orElseThrow(() -> new AccountException("Account not found"));
 
         return AccountMapper.mapToAccountDto(account);
     }
 
     @Override
     public AccountDto deposit(Long id, double amount) {
-        Account account = accountRepository.findById(id).orElseThrow(() -> new RuntimeException("Account not found"));
+        Account account = accountRepository.findById(id).orElseThrow(() -> new AccountException("Account not found"));
 
         account.setBalance(account.getBalance() + amount);
         Account savedAccount = accountRepository.save(account);
@@ -45,7 +46,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public AccountDto withdraw(Long id, double amount) {
-        Account account = accountRepository.findById(id).orElseThrow(() -> new RuntimeException("Account not found"));
+        Account account = accountRepository.findById(id).orElseThrow(() -> new AccountException("Account not found"));
         if(account.getBalance() < amount) {
             throw new RuntimeException("Not enough balance");
         }
