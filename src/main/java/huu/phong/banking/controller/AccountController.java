@@ -1,6 +1,7 @@
 package huu.phong.banking.controller;
 
 import huu.phong.banking.dto.AccountDto;
+import huu.phong.banking.dto.TransferFundDto;
 import huu.phong.banking.service.AccountService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,9 +33,9 @@ public class AccountController {
 
     @PutMapping("/{id}/deposit")
     public ResponseEntity<AccountDto> deposit(@PathVariable Long id, @RequestBody Map<String, Double> request) {
-       Double amount = request.get("amount");
-       AccountDto accountDto = accountService.deposit(id, amount);
-         return ResponseEntity.ok(accountDto);
+        Double amount = request.get("amount");
+        AccountDto accountDto = accountService.deposit(id, amount);
+        return ResponseEntity.ok(accountDto);
     }
 
     @PutMapping("/{id}/withdraw")
@@ -53,6 +54,12 @@ public class AccountController {
     public ResponseEntity<String> deleteAccountById(@PathVariable Long id) {
         accountService.deleteAccountById(id);
         return ResponseEntity.ok("Account is deleted successfully");
+    }
+
+    @PostMapping("/transfer")
+    public ResponseEntity<String> transferFunds(@RequestBody TransferFundDto transferFundDto) {
+        accountService.transferFunds(transferFundDto);
+        return ResponseEntity.ok("Transfer Successful");
     }
 
 }
