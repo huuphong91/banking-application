@@ -1,6 +1,7 @@
 package huu.phong.banking.controller;
 
 import huu.phong.banking.dto.AccountDto;
+import huu.phong.banking.dto.TransactionDto;
 import huu.phong.banking.dto.TransferFundDto;
 import huu.phong.banking.service.AccountService;
 import org.springframework.http.HttpStatus;
@@ -60,6 +61,11 @@ public class AccountController {
     public ResponseEntity<String> transferFunds(@RequestBody TransferFundDto transferFundDto) {
         accountService.transferFunds(transferFundDto);
         return ResponseEntity.ok("Transfer Successful");
+    }
+
+    @GetMapping("/{id}/transactions")
+    public ResponseEntity<List<TransactionDto>> getAccountTransactions(@PathVariable Long id) {
+        return ResponseEntity.ok(accountService.getAccountTransactions(id));
     }
 
 }

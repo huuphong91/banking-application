@@ -1,6 +1,7 @@
 package huu.phong.banking.service;
 
 import huu.phong.banking.dto.AccountDto;
+import huu.phong.banking.dto.TransactionDto;
 import huu.phong.banking.dto.TransferFundDto;
 
 import java.util.List;
@@ -20,4 +21,6 @@ public interface AccountService {
     void deleteAccountById(Long id);
 
     void transferFunds(TransferFundDto transferFundDto);
+
+    List<TransactionDto> getAccountTransactions(Long id);
 }
